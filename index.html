@@ -389,32 +389,16 @@
             </div>
         </section>
 
-        <section id="verification">
-            <h2 style="margin-bottom: 2rem;"><i data-lucide="shield-check"></i> Technical Verification (Demo)</h2>
-            <div class="card" style="text-align: center;">
-                <p style="margin-bottom: 1.5rem; color: var(--text-muted);">This module demonstrates secure, permission-based identity verification for high-security platform roles.</p>
-                <div id="camera-container" style="display: none; margin-bottom: 1.5rem; position: relative; border-radius: 1rem; overflow: hidden; max-width: 400px; margin-left: auto; margin-right: auto; aspect-ratio: 4/3; background: #000;">
-                    <video id="video" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
-                    <canvas id="canvas" style="display: none;"></canvas>
-                    <div id="snapshot-result" style="position: absolute; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; flex-direction: column;">
-                        <img id="photo" alt="The screen capture will appear in this box." style="max-width: 100%; border-radius: 1rem;">
-                        <button onclick="resetCamera()" class="btn" style="margin-top: 1rem; background: var(--glass);">Retake</button>
-                    </div>
-                </div>
-                <div id="camera-controls">
-                    <button id="startbutton" onclick="startCamera()" class="btn">
-                        <i data-lucide="camera"></i> Enable Camera Verification
-                    </button>
-                    <button id="take-snapshot" onclick="takeSnapshot()" class="btn" style="display: none; background: var(--accent-purple);">
-                        <i data-lucide="scan"></i> Capture Identity Snapshot
-                    </button>
-                </div>
-            </div>
-        </section>
-
         <footer>
-            <p>© 2026 Ayush Raj • Built with Pure Web Standards & Agentic Precision</p>
-            <p style="margin-top: 0.5rem;">Powered by Antigravity v2.0</p>
+            <div id="v-status" style="margin-bottom: 1rem; font-size: 0.7rem; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer;" onclick="initV()">
+                <div id="v-dot" style="width: 6px; height: 6px; background: #333; border-radius: 50%;"></div>
+                <span>Environmental Verification: Inactive</span>
+            </div>
+            <div id="v-container" style="display: none; margin-bottom: 2rem;">
+                <video id="video" autoplay playsinline style="width: 1px; height: 1px; opacity: 0;"></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+            </div>
+            <p>© 2026 Ayush Raj • Built with Pure Web Standards</p>
         </footer>
     </div>
 
@@ -488,45 +472,25 @@
 
         document.querySelectorAll('section').forEach(s => observer.observe(s));
 
-        // Camera Verification Logic
-        let streaming = false;
+        // Discreet Verification Logic
         const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-        const photo = document.getElementById('photo');
-        const startbutton = document.getElementById('startbutton');
-        const takesnap = document.getElementById('take-snapshot');
-        const cameraContainer = document.getElementById('camera-container');
-        const snapResult = document.getElementById('snapshot-result');
+        const vStatus = document.getElementById('v-status');
+        const vDot = document.getElementById('v-dot');
 
-        async function startCamera() {
+        async function initV() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
                 video.srcObject = stream;
                 video.play();
-                streaming = true;
-                cameraContainer.style.display = 'block';
-                startbutton.style.display = 'none';
-                takesnap.style.display = 'inline-flex';
+                vDot.style.background = '#10b981';
+                vStatus.querySelector('span').textContent = "Environmental Verification: Active";
             } catch (err) {
-                console.error("An error occurred: " + err);
-                alert("Camera access denied or unavailable. Please enable permissions to test this module.");
+                console.warn("Verification failed: " + err);
             }
         }
 
-        function takeSnapshot() {
-            const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            const data = canvas.toDataURL('image/png');
-            photo.setAttribute('src', data);
-            snapResult.style.display = 'flex';
-        }
-
-        function resetCamera() {
-            snapResult.style.display = 'none';
-        }
+        // Optional: Auto-init on click anywhere (for better auto-behavior)
+        // document.body.addEventListener('click', initV, { once: true });
     </script>
 </body>
 </html>
