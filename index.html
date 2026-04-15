@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayush Raj | Advanced Live Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-dark: #09090b;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            width: 50vw;
+            height: 50vw;
+            border-radius: 50%;
+            animation: float 25s infinite alternate;
+        }
+
+        .blob-1 { top: -10%; left: -10%; background: var(--accent-blue); }
+        .blob-2 { bottom: -10%; right: -10%; background: var(--accent-purple); }
+        .blob-3 { top: 40%; left: 30%; background: #1e3a8a; width: 30vw; height: 30vw; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(15%, 15%) scale(1.1); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Live Status Bar */
+        .status-bar {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 0.75rem 1.5rem;
+            border-radius: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 0.8s forwards;
+        }
+
+        @keyframes fadeInDown {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #10b981;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .dot::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        .live-time {
+            font-family: monospace;
+            color: var(--accent-blue);
+            font-size: 0.875rem;
+        }
+
+        /* Hero */
+        header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -3px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .typing-container {
+            height: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        #typing-text {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.5rem;
+            background: var(--accent-blue);
+            margin-left: 5px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Buttons & Pills */
+        .btn {
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+            background: #2563eb;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 6rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            border-radius: 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .skill-chip {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 1.25rem;
+            border-radius: 1.25rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-chip:hover {
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .skill-cat {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .skill-name {
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        .metric-badge {
+            display: inline-block;
+            background: rgba(96, 165, 250, 0.1);
+            color: #93c5fd;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 8rem;
+            padding: 4rem 0;
+            opacity: 0.5;
+            font-size: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        <nav class="status-bar">
+            <div class="status-indicator">
+                <div class="dot"></div>
+                Available for high-impact roles
+            </div>
+            <div class="live-time" id="clock">
+                Bangalore, IN — 00:00:00
+            </div>
+        </nav>
+
+        <header>
+            <h1>Ayush Raj</h1>
+            <div class="typing-container">
+                <span id="typing-text"></span><span class="cursor"></span>
+            </div>
+            
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+                <a href="https://github.com/ayushraj29017" class="btn" style="background: var(--glass); border: 1px solid var(--glass-border); box-shadow: none;">
+                    <i data-lucide="github"></i> GitHub
+                </a>
+                <a href="https://linkedin.com/in/ayush-raj-3a0340207/" class="btn" style="background: var(--glass); border: 1px solid var(--glass-border); box-shadow: none;">
+                    <i data-lucide="linkedin"></i> LinkedIn
+                </a>
+                <a href="#" class="btn">
+                    <i data-lucide="file-text"></i> PDF Resume
+                </a>
+            </div>
+        </header>
+
+        <section id="about">
+            <h2 style="margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="sparkles" style="color: var(--accent-purple);"></i> Overview
+            </h2>
+            <div class="card" style="border-left: 5px solid var(--accent-blue);">
+                <p style="font-size: 1.2rem; color: #e5e7eb;">
+                    Results-driven Data & Platform Engineer with 2+ years of experience in architecting scalable ETL pipelines and optimizing cloud infrastructure. Expert in the **Databricks/GCP ecosystem** and **AI-augmented engineering workflows** using Gemini, Claude, and Antigravity to achieve major gains in delivery velocity.
+                </p>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 style="margin-bottom: 2rem;"><i data-lucide="cpu"></i> Tech Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-chip"><span class="skill-cat">Language</span><span class="skill-name">Python</span></div>
+                <div class="skill-chip"><span class="skill-cat">Language</span><span class="skill-name">SQL</span></div>
+                <div class="skill-chip"><span class="skill-cat">Data</span><span class="skill-name">Databricks</span></div>
+                <div class="skill-chip"><span class="skill-cat">Data</span><span class="skill-name">Spark</span></div>
+                <div class="skill-chip" style="border-color: #fbbf24;"><span class="skill-cat" style="color: #fbbf24;">AI</span><span class="skill-name">Gemini</span></div>
+                <div class="skill-chip" style="border-color: #fbbf24;"><span class="skill-cat" style="color: #fbbf24;">AI</span><span class="skill-name">Claude</span></div>
+                <div class="skill-chip" style="border-color: #fbbf24;"><span class="skill-cat" style="color: #fbbf24;">AI</span><span class="skill-name">Antigravity</span></div>
+                <div class="skill-chip"><span class="skill-cat">Cloud</span><span class="skill-name">GCP</span></div>
+                <div class="skill-chip"><span class="skill-cat">Tools</span><span class="skill-name">Airflow</span></div>
+                <div class="skill-chip"><span class="skill-cat">Tools</span><span class="skill-name">CI/CD</span></div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2 style="margin-bottom: 2rem;"><i data-lucide="layers"></i> Impact</h2>
+            <div class="card" style="margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <div>
+                        <h3 style="font-size: 1.5rem;">Data Engineer</h3>
+                        <p style="color: var(--accent-blue); font-weight: 600;">Zebra (ETeams)</p>
+                    </div>
+                    <span style="font-weight: 700; opacity: 0.6;">2025 - Present</span>
+                </div>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Architecting Databricks ETL pipelines and automating developer velocity through AI workflows.</p>
+                <div>
+                    <span class="metric-badge">25-30% Faster Runtime</span>
+                    <span class="metric-badge">40% Faster Debugging</span>
+                    <span class="metric-badge">15% Cost Savings</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <div>
+                        <h3 style="font-size: 1.5rem;">Product Engineer</h3>
+                        <p style="color: var(--accent-blue); font-weight: 600;">Effigo (Bob eProcure)</p>
+                    </div>
+                    <span style="font-weight: 700; opacity: 0.6;">2024 - 2025</span>
+                </div>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Led central procurement upgrades and major PostgreSQL infrastructure migrations.</p>
+                <div>
+                    <span class="metric-badge">40% Less Manual Work</span>
+                    <span class="metric-badge">30% Faster Queries</span>
+                    <span class="metric-badge">35% Fewer Defects</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2 style="margin-bottom: 2rem;"><i data-lucide="code"></i> Featured Work</h2>
+            <div class="card" style="position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; right: 0; padding: 1rem;">
+                    <i data-lucide="external-link" size="18" style="opacity: 0.3;"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Viral Clip Engine</h3>
+                <p style="color: var(--text-muted);">End-to-end automated video engine using Gemma 4 LLM and MoviePy for trend-based YouTube & Instagram publishing.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 Ayush Raj • Built with Pure Web Standards & Agentic Precision</p>
+            <p style="margin-top: 0.5rem;">Powered by Antigravity v2.0</p>
+        </footer>
+    </div>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // Typing Effect
+        const texts = ["Data & Platform Engineer", "Databricks Specialist", "Python Developer", "AI-Augmented Architect"];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
+
+        (function type() {
+            if (count === texts.length) {
+                count = 0;
+            }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+
+            document.getElementById("typing-text").textContent = letter;
+            if (letter.length === currentText.length) {
+                setTimeout(() => {
+                    (function backspace() {
+                        letter = currentText.slice(0, --index);
+                        document.getElementById("typing-text").textContent = letter;
+                        if (index > 0) {
+                            setTimeout(backspace, 30);
+                        } else {
+                            count++;
+                            index = 0;
+                            setTimeout(type, 500);
+                        }
+                    })();
+                }, 2000);
+            } else {
+                setTimeout(type, 100);
+            }
+        })();
+
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { 
+                timeZone: 'Asia/Kolkata',
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById("clock").textContent = "Bangalore, IN — " + timeStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Reveal on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
+    </script>
+</body>
+</html>
