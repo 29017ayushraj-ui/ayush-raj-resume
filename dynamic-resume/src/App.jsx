@@ -52,7 +52,7 @@ const resumeData = {
         "Vulnerability Remediation",
         "Agentic AI Automation"
       ],
-      description: "Promoted to permanent full-time Data Engineer Professional 1. Architected enterprise Platform Command Center to manage operational workloads, led automated vulnerability management, and engineered agentic self-healing pipelines."
+      description: "Spearheading enterprise-wide data platform initiatives — driving end-to-end ownership of critical data infrastructure, platform command center architecture, vulnerability management, and agentic AI automation across Zebra's global engineering organization."
     },
     {
       role: "Data Engineer",
