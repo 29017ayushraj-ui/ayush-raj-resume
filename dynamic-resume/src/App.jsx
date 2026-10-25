@@ -19,8 +19,8 @@ import {
 
 const resumeData = {
   name: "Ayush Raj",
-  title: "Data & Platform Engineer",
-  summary: "Results-driven Data & Platform Engineer with 2+ years of experience in architecting scalable ETL pipelines, optimizing cloud infrastructure, and improving data reliability. Expert in the Databricks/GCP ecosystem and AI-augmented engineering workflows.",
+  title: "Data Engineer Professional 1",
+  summary: "Results-driven Data Engineer Professional 1 with 2+ years of experience in architecting scalable end-to-end data pipelines, real-time command centers, and resilient cloud infrastructure. Expert in the Databricks/GCP ecosystem, vulnerability remediation, and autonomous agentic AI workflows.",
   contact: {
     location: "Bangalore, India",
     phone: "9142833856",
@@ -31,28 +31,39 @@ const resumeData = {
   skills: [
     { name: "Python", category: "Language" },
     { name: "SQL", category: "Language" },
-    { name: "Java (Spring Boot)", category: "Language" },
     { name: "Databricks", category: "Data" },
     { name: "Apache Spark", category: "Data" },
-    { name: "Airflow", category: "Data" },
     { name: "BigQuery", category: "Data" },
-    { name: "GCP", category: "Cloud" },
-    { name: "Gemini", category: "AI" },
-    { name: "Claude AI", category: "AI" },
+    { name: "Airflow", category: "Data" },
+    { name: "Agentic Dev", category: "AI & Agents" },
     { name: "Antigravity", category: "AI" },
-    { name: "CI/CD", category: "DevOps" }
+    { name: "Gemini / Claude", category: "AI" },
+    { name: "Command Center", category: "Platform" },
+    { name: "Vulnerability Fixes", category: "Security" },
+    { name: "GCP & CI/CD", category: "DevOps" }
   ],
   experience: [
     {
+      role: "Data Engineer Professional 1",
+      company: "Zebra Technologies (Converted Full-Time)",
+      period: "July 2026 – Present",
+      metrics: [
+        "Platform Command Center",
+        "Vulnerability Remediation",
+        "Agentic AI Automation"
+      ],
+      description: "Promoted to permanent full-time Data Engineer Professional 1. Architected enterprise Platform Command Center to manage operational workloads, led automated vulnerability management, and engineered agentic self-healing pipelines."
+    },
+    {
       role: "Data Engineer",
-      company: "Zebra (via ETeams)",
-      period: "Oct 2025 – Present",
+      company: "E-Team (Contracted to Zebra)",
+      period: "Oct 2025 – June 2026",
       metrics: [
         "25-30% reduction in pipeline runtime",
         "40% faster incident investigation",
         "15% reduction in compute costs"
       ],
-      description: "Architected Databricks ETL pipelines and enterprise Job Monitoring frameworks using Airflow and BigQuery."
+      description: "Architected Databricks ETL pipelines, enterprise Airflow monitoring frameworks, and automated ServiceNow/Jira ingestion pipelines into BigQuery."
     },
     {
       role: "Product Engineer",
@@ -63,21 +74,10 @@ const resumeData = {
         "25-30% faster query execution",
         "35% lower defect rates"
       ],
-      description: "Led Central Procurement workflow design and PostgreSQL migration for 5,000+ users."
+      description: "Led Central Procurement workflow design and organization-wide PostgreSQL migration for 5,000+ users."
     }
   ],
-  projects: [
-    {
-      name: "Viral Clip Engine",
-      tech: "Python, MoviePy, Gemma 4",
-      desc: "Automated video generation engine using LLMs and media APIs for trend-based publishing."
-    },
-    {
-      name: "End-to-End Data Pipeline",
-      tech: "GCP, PySpark, BigQuery",
-      desc: "Cloud-native ETL pipeline processing raw datasets into analytics-ready tables."
-    }
-  ]
+  projects: []
 }
 
 const Section = ({ title, children, icon: Icon }) => (
@@ -198,7 +198,7 @@ function App() {
           </span>
         </h1>
         
-        <TypingText texts={["Data & Platform Engineer", "Databricks Specialist", "Python Developer", "AI-Augmented Architect"]} />
+        <TypingText texts={["Data Engineer Professional 1", "Platform & Data Engineer", "Databricks & BigQuery Specialist", "Agentic AI Developer"]} />
         
         <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400" style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           <span className="flex items-center gap-2"><MapPin size={16}/> {resumeData.contact.location}</span>
@@ -274,23 +274,6 @@ function App() {
         </div>
       </Section>
 
-      {/* Projects */}
-      <Section title="Featured Projects" icon={Code2}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {resumeData.projects.map((proj, i) => (
-            <Card key={i} className="flex flex-col h-full">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-white">{proj.name}</h3>
-                <ExternalLink size={20} className="text-gray-500" />
-              </div>
-              <p className="text-gray-400 mb-6 flex-grow">{proj.desc}</p>
-              <div className="pt-4 border-t border-white/5">
-                <span className="text-xs font-mono text-purple-400">{proj.tech}</span>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </Section>
 
       {/* Footer */}
       <footer className="mt-32 pt-8 border-t border-white/5 text-center text-gray-500 text-sm">
